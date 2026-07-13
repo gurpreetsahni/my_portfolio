@@ -6,6 +6,7 @@ import { Mail, MapPin, Linkedin, Phone, Send, Check, AlertCircle, MessageCircle 
 import SectionHeading from "@/components/ui/SectionHeading";
 import MagneticButton from "@/components/ui/MagneticButton";
 import { profile } from "@/lib/data";
+import { countryCodes } from "@/lib/countryCodes";
 
 // ─── Web3Forms ───────────────────────────────────────────────────────────────
 // Free contact form service — no signup needed.
@@ -21,6 +22,7 @@ export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [countryCode, setCountryCode] = useState("+91");
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -30,6 +32,42 @@ export default function Contact() {
     setErrorMsg("");
 
     const formData = new FormData(formRef.current);
+
+    // ─── Email Validation ──────────────────────────────────────────────────
+    const email = (formData.get("email") as string).trim();
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const blockedDomains = ["test.com", "fake.com", "example.com", "abc.com", "xyz.com", "temp.com", "mailinator.com", "guerrillamail.com", "yopmail.com", "throwaway.email"];
+    const emailDomain = email.split("@")[1]?.toLowerCase();
+
+    if (!emailRegex.test(email)) {
+      setStatus("error");
+      setErrorMsg("Please enter a valid email address.");
+      setTimeout(() => setStatus("idle"), 4000);
+      return;
+    }
+
+    if (blockedDomains.includes(emailDomain)) {
+      setStatus("error");
+      setErrorMsg("Please use a real email address, not a disposable one.");
+      setTimeout(() => setStatus("idle"), 4000);
+      return;
+    }
+
+    // ─── Phone Validation ──────────────────────────────────────────────────
+    const phone = (formData.get("phone") as string).trim();
+    if (phone) {
+      const digitsOnly = phone.replace(/[\s\-\(\)\+]/g, "");
+      if (digitsOnly.length < 7 || digitsOnly.length > 12 || !/^\d+$/.test(digitsOnly)) {
+        setStatus("error");
+        setErrorMsg("Please enter a valid phone number (7-12 digits without country code).");
+        setTimeout(() => setStatus("idle"), 4000);
+        return;
+      }
+      // Append full phone with country code to form data
+      formData.set("phone", `${countryCode} ${phone}`);
+    }
+
+    // ─── Submit ────────────────────────────────────────────────────────────
     formData.append("access_key", WEB3FORMS_KEY);
     formData.append("subject", `Portfolio Contact: ${formData.get("name")}`);
 
@@ -148,16 +186,33 @@ export default function Contact() {
               name="email"
               required
               type="email"
+              pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+              title="Please enter a valid email (e.g. name@gmail.com)"
               placeholder="Your email"
               className="rounded-xl bg-white/[0.03] border border-base-line px-4 py-3 text-sm text-ink-primary placeholder:text-ink-faint focus:border-accent-violet transition-colors outline-none"
             />
           </div>
-          <input
-            name="phone"
-            type="tel"
-            placeholder="Your phone (optional)"
-            className="rounded-xl bg-white/[0.03] border border-base-line px-4 py-3 text-sm text-ink-primary placeholder:text-ink-faint focus:border-accent-violet transition-colors outline-none"
-          />
+          <div className="flex gap-2">
+            <select
+              value={countryCode}
+              onChange={(e) => setCountryCode(e.target.value)}
+              className="rounded-xl bg-white/[0.03] border border-base-line px-3 py-3 text-sm text-ink-primary focus:border-accent-violet transition-colors outline-none w-[130px] appearance-none cursor-pointer"
+            >
+              {countryCodes.map((c) => (
+                <option key={c.code + c.country} value={c.code} className="bg-[#111] text-white">
+                  {c.label}
+                </option>
+              ))}
+            </select>
+            <input
+              name="phone"
+              type="tel"
+              pattern="\d{7,12}"
+              title="Enter 7-12 digit phone number without country code"
+              placeholder="Phone number (optional)"
+              className="rounded-xl bg-white/[0.03] border border-base-line px-4 py-3 text-sm text-ink-primary placeholder:text-ink-faint focus:border-accent-violet transition-colors outline-none flex-1"
+            />
+          </div>
           <textarea
             name="message"
             required
