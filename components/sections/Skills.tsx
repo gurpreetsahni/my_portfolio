@@ -59,11 +59,11 @@ export default function Skills() {
                       </span>
                       <span className="font-mono text-xs text-ink-faint">{skill.level}%</span>
                     </div>
-                    <div className="h-1.5 w-full rounded-full bg-white/5 overflow-hidden">
+                    <div className="h-2 sm:h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${skill.level}%` }}
-                        viewport={{ once: true, margin: "-60px" }}
+                        viewport={{ once: true, amount: 0 }}
                         transition={{ duration: 0.9, delay: 0.1 + si * 0.08, ease: [0.16, 1, 0.3, 1] }}
                         className="h-full rounded-full bg-gradient-to-r from-accent-violet to-accent-blue"
                       />
