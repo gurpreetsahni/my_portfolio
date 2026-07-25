@@ -171,7 +171,7 @@ export default function Contact() {
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5 }}
           onSubmit={handleSubmit}
-          className="glass glow-border rounded-2xl p-5 md:p-8 flex flex-col gap-4 min-w-0"
+          className="glass rounded-2xl border border-base-line p-5 md:p-8 flex flex-col gap-4 min-w-0"
         >
           {/* Honeypot for spam */}
           <input type="checkbox" name="botcheck" className="hidden" />
