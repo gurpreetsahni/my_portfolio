@@ -8,8 +8,8 @@ import { profile, stats, timeline } from "@/lib/data";
 
 export default function About() {
   return (
-    <section id="about" className="relative section-pad container-px">
-      <div className="absolute top-1/3 right-0 w-[24rem] h-[24rem] bg-aurora-2 rounded-full blur-3xl -z-10 opacity-40" />
+    <section id="about" className="relative section-pad container-px overflow-hidden">
+      <div className="absolute top-1/3 right-0 w-[24rem] max-w-full h-[24rem] bg-aurora-2 rounded-full blur-3xl -z-10 opacity-40" />
 
       <SectionHeading
         eyebrow="About"

@@ -7,8 +7,8 @@ import { experience } from "@/lib/data";
 
 export default function Experience() {
   return (
-    <section id="experience" className="relative section-pad container-px">
-      <div className="absolute top-0 left-0 w-[26rem] h-[26rem] bg-aurora-1 rounded-full blur-3xl -z-10 opacity-30" />
+    <section id="experience" className="relative section-pad container-px overflow-hidden">
+      <div className="absolute top-0 left-0 w-[26rem] max-w-full h-[26rem] bg-aurora-1 rounded-full blur-3xl -z-10 opacity-30" />
 
       <SectionHeading
         eyebrow="Career"

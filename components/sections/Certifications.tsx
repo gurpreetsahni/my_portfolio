@@ -7,8 +7,8 @@ import { certifications } from "@/lib/data";
 
 export default function Certifications() {
   return (
-    <section id="certifications" className="relative section-pad container-px">
-      <div className="absolute bottom-0 right-0 w-[24rem] h-[24rem] bg-aurora-3 rounded-full blur-3xl -z-10 opacity-30" />
+    <section id="certifications" className="relative section-pad container-px overflow-hidden">
+      <div className="absolute bottom-0 right-0 w-[24rem] max-w-full h-[24rem] bg-aurora-3 rounded-full blur-3xl -z-10 opacity-30" />
 
       <SectionHeading eyebrow="Credentials" title="Certifications" align="center" />
 

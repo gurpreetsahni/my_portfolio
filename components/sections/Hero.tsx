@@ -52,9 +52,9 @@ export default function Hero() {
       className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden container-px pt-28 pb-20"
     >
       <div className="absolute inset-0 -z-20 bg-grid" aria-hidden="true" />
-      <div className="absolute -top-40 -left-40 w-[36rem] h-[36rem] bg-aurora-1 rounded-full blur-3xl -z-20 animate-float" />
-      <div className="absolute top-0 right-0 w-[30rem] h-[30rem] bg-aurora-2 rounded-full blur-3xl -z-20 animate-float" style={{ animationDelay: "-2s" }} />
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[28rem] h-[28rem] bg-aurora-3 rounded-full blur-3xl -z-20 animate-float" style={{ animationDelay: "-4s" }} />
+      <div className="absolute -top-40 left-0 w-[36rem] max-w-full h-[36rem] bg-aurora-1 rounded-full blur-3xl -z-20 animate-float" />
+      <div className="absolute top-0 right-0 w-[30rem] max-w-full h-[30rem] bg-aurora-2 rounded-full blur-3xl -z-20 animate-float" style={{ animationDelay: "-2s" }} />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[28rem] max-w-full h-[28rem] bg-aurora-3 rounded-full blur-3xl -z-20 animate-float" style={{ animationDelay: "-4s" }} />
 
       <NetworkField />
 
