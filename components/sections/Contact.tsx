@@ -93,7 +93,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative section-pad container-px">
+    <section id="contact" className="relative section-pad container-px" style={{ zIndex: 3 }}>
       <div className="absolute inset-0 -z-10 bg-grid opacity-60" />
 
       <SectionHeading
