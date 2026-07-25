@@ -61,7 +61,7 @@ export default function Experience() {
               {job.highlights.map((h) => (
                 <span
                   key={h}
-                  className="rounded-full border border-base-line bg-white/[0.03] px-3 py-1 text-xs text-ink-muted"
+                  className="rounded-full border border-base-line bg-white/[0.03] px-3 py-1 text-xs text-ink-muted whitespace-nowrap"
                 >
                   {h}
                 </span>

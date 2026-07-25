@@ -103,7 +103,7 @@ export default function Contact() {
         align="center"
       />
 
-      <div className="mt-16 grid lg:grid-cols-[1fr_1.4fr] gap-8 max-w-4xl mx-auto">
+      <div className="mt-16 grid lg:grid-cols-[1fr_1.4fr] gap-8 max-w-4xl mx-auto w-full">
         {/* Contact Info + WhatsApp */}
         <div className="flex flex-col gap-4">
           {[
@@ -170,7 +170,7 @@ export default function Contact() {
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5 }}
           onSubmit={handleSubmit}
-          className="glass glow-border rounded-2xl p-6 md:p-8 flex flex-col gap-4"
+          className="glass glow-border rounded-2xl p-5 md:p-8 flex flex-col gap-4 min-w-0"
         >
           {/* Honeypot for spam */}
           <input type="checkbox" name="botcheck" className="hidden" />
@@ -180,7 +180,7 @@ export default function Contact() {
               name="name"
               required
               placeholder="Your name"
-              className="rounded-xl bg-white/[0.03] border border-base-line px-4 py-3 text-sm text-ink-primary placeholder:text-ink-faint focus:border-accent-violet transition-colors outline-none"
+              className="w-full rounded-xl bg-white/[0.03] border border-base-line px-4 py-3 text-sm text-ink-primary placeholder:text-ink-faint focus:border-accent-violet transition-colors outline-none min-w-0"
             />
             <input
               name="email"
@@ -189,14 +189,14 @@ export default function Contact() {
               pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
               title="Please enter a valid email (e.g. name@gmail.com)"
               placeholder="Your email"
-              className="rounded-xl bg-white/[0.03] border border-base-line px-4 py-3 text-sm text-ink-primary placeholder:text-ink-faint focus:border-accent-violet transition-colors outline-none"
+              className="w-full rounded-xl bg-white/[0.03] border border-base-line px-4 py-3 text-sm text-ink-primary placeholder:text-ink-faint focus:border-accent-violet transition-colors outline-none min-w-0"
             />
           </div>
           <div className="flex gap-2">
             <select
               value={countryCode}
               onChange={(e) => setCountryCode(e.target.value)}
-              className="rounded-xl bg-white/[0.03] border border-base-line px-3 py-3 text-sm text-ink-primary focus:border-accent-violet transition-colors outline-none w-[130px] appearance-none cursor-pointer"
+              className="rounded-xl bg-white/[0.03] border border-base-line px-2 py-3 text-sm text-ink-primary focus:border-accent-violet transition-colors outline-none w-[110px] min-w-[110px] appearance-none cursor-pointer"
             >
               {countryCodes.map((c) => (
                 <option key={c.code + c.country} value={c.code} className="bg-[#111] text-white">
@@ -209,8 +209,8 @@ export default function Contact() {
               type="tel"
               pattern="\d{7,12}"
               title="Enter 7-12 digit phone number without country code"
-              placeholder="Phone number (optional)"
-              className="rounded-xl bg-white/[0.03] border border-base-line px-4 py-3 text-sm text-ink-primary placeholder:text-ink-faint focus:border-accent-violet transition-colors outline-none flex-1"
+              placeholder="Phone (optional)"
+              className="rounded-xl bg-white/[0.03] border border-base-line px-4 py-3 text-sm text-ink-primary placeholder:text-ink-faint focus:border-accent-violet transition-colors outline-none flex-1 min-w-0"
             />
           </div>
           <textarea
