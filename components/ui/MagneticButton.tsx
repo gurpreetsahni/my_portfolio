@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, MouseEvent, ReactNode } from "react";
+import { useRef, useState, MouseEvent, ReactNode, useEffect } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useClickSound } from "@/lib/useClickSound";
@@ -26,7 +26,29 @@ export default function MagneticButton({
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const playClick = useClickSound();
 
+  // Reset position when page regains focus (e.g., returning from PDF)
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") {
+        setPos({ x: 0, y: 0 });
+      }
+    };
+    const handleFocus = () => setPos({ x: 0, y: 0 });
+
+    document.addEventListener("visibilitychange", handleVisibility);
+    window.addEventListener("focus", handleFocus);
+    window.addEventListener("pageshow", handleFocus);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibility);
+      window.removeEventListener("focus", handleFocus);
+      window.removeEventListener("pageshow", handleFocus);
+    };
+  }, []);
+
   const handleMouseMove = (e: MouseEvent) => {
+    // Disable magnetic effect on touch devices
+    if ("ontouchstart" in window) return;
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
@@ -54,6 +76,7 @@ export default function MagneticButton({
       onClick={handleClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={reset}
+      onTouchEnd={reset}
       animate={{ x: pos.x, y: pos.y }}
       transition={{ type: "spring", stiffness: 150, damping: 12, mass: 0.2 }}
       className={cn(

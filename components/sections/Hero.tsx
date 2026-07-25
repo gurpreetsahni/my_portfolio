@@ -75,7 +75,7 @@ export default function Hero() {
         </span>
       </motion.div>
 
-      <h1 className="font-display text-center text-[11vw] leading-[1.1] md:text-[6vw] md:leading-[0.95] font-medium tracking-tight text-gradient max-w-6xl">
+      <h1 className="font-display text-center text-[11vw] leading-[1.3] md:text-[6vw] md:leading-[1.2] font-medium tracking-tight text-gradient max-w-6xl pb-2">
         {nameWords.map((word, wi) => {
           const wordElement = (
             <span key={wi} className="inline-block whitespace-nowrap">
