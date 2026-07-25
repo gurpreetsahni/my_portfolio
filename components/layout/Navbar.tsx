@@ -77,13 +77,21 @@ export default function Navbar() {
             Let's Talk
           </button>
 
-          <button
-            onClick={() => setOpen(true)}
-            className="md:hidden glass rounded-full p-2.5"
-            aria-label="Open menu"
-          >
-            <Menu size={20} />
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            <button
+              onClick={() => handleLinkClick("#contact")}
+              className="inline-flex items-center rounded-full bg-gradient-to-r from-accent-violet to-accent-blue px-4 py-2 text-xs font-medium text-white shadow-glow-sm"
+            >
+              Let's Talk
+            </button>
+            <button
+              onClick={() => setOpen(true)}
+              className="glass rounded-full p-2.5"
+              aria-label="Open menu"
+            >
+              <Menu size={20} />
+            </button>
+          </div>
         </div>
       </header>
 
