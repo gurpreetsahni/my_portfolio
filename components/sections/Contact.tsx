@@ -165,6 +165,7 @@ export default function Contact() {
         {/* Contact Form */}
         <motion.form
           ref={formRef}
+          id="contact-form"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
