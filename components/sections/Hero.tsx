@@ -41,10 +41,12 @@ function useTypingRoles(roles: string[]) {
   return text;
 }
 
-const nameChars = "Gurpreet Singh Sahni".split("");
+const nameWords = "Gurpreet Singh Sahni".split(" ");
 
 export default function Hero() {
   const typed = useTypingRoles(profile.roles);
+
+  let charIndex = 0;
 
   return (
     <section
@@ -73,18 +75,37 @@ export default function Hero() {
         </span>
       </motion.div>
 
-      <h1 className="font-display text-center text-[13vw] leading-[0.95] md:text-[6vw] md:leading-[0.95] font-medium tracking-tight text-gradient max-w-6xl">
-        {nameChars.map((char, i) => (
-          <motion.span
-            key={i}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 + i * 0.02, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-block"
-          >
-            {char === " " ? "\u00A0" : char}
-          </motion.span>
-        ))}
+      <h1 className="font-display text-center text-[11vw] leading-[1.1] md:text-[6vw] md:leading-[0.95] font-medium tracking-tight text-gradient max-w-6xl">
+        {nameWords.map((word, wi) => {
+          const wordElement = (
+            <span key={wi} className="inline-block whitespace-nowrap">
+              {word.split("").map((char) => {
+                const ci = charIndex++;
+                return (
+                  <motion.span
+                    key={ci}
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 + ci * 0.02, ease: [0.16, 1, 0.3, 1] }}
+                    className="inline-block"
+                  >
+                    {char}
+                  </motion.span>
+                );
+              })}
+            </span>
+          );
+          charIndex++; // account for space
+          if (wi < nameWords.length - 1) {
+            return (
+              <span key={`w-${wi}`}>
+                {wordElement}
+                <span className="inline-block">&nbsp;</span>
+              </span>
+            );
+          }
+          return wordElement;
+        })}
       </h1>
 
       <motion.div

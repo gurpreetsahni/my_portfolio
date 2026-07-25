@@ -32,7 +32,7 @@ export default function About() {
               src="/photo.png"
               alt={profile.name}
               fill
-              className="object-cover scale-[1.09] object-top"
+              className="object-cover object-top"
               priority
             />
           </div>
