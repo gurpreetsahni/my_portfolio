@@ -4,9 +4,19 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
-import { profile, stats, timeline } from "@/lib/data";
+import { profile as staticProfile, stats as staticStats, timeline as staticTimeline } from "@/lib/data";
 
-export default function About() {
+interface AboutProps {
+  profile?: typeof staticProfile;
+  stats?: typeof staticStats;
+  timeline?: typeof staticTimeline;
+}
+
+export default function About({ profile: profileProp, stats: statsProp, timeline: timelineProp }: AboutProps) {
+  const profile = profileProp || staticProfile;
+  const stats = statsProp || staticStats;
+  const timeline = timelineProp || staticTimeline;
+
   return (
     <section id="about" className="relative section-pad container-px overflow-hidden">
       <div className="absolute top-1/3 right-0 w-[24rem] max-w-full h-[24rem] bg-aurora-2 rounded-full blur-3xl -z-10 opacity-40" />

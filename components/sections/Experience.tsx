@@ -3,9 +3,21 @@
 import { motion } from "framer-motion";
 import { Briefcase } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { experience } from "@/lib/data";
+import { experience as staticExperience } from "@/lib/data";
 
-export default function Experience() {
+interface ExperienceItem {
+  company: string;
+  role: string;
+  focus: string;
+  period: string;
+  current: boolean;
+  bullets: string[];
+  highlights: string[];
+}
+
+export default function Experience({ experience: experienceProp }: { experience?: ExperienceItem[] }) {
+  const experience = experienceProp || staticExperience;
+
   return (
     <section id="experience" className="relative section-pad container-px overflow-hidden">
       <div className="absolute top-0 left-0 w-[26rem] max-w-full h-[26rem] bg-aurora-1 rounded-full blur-3xl -z-10 opacity-30" />

@@ -1,14 +1,17 @@
+// Static fallback data - used if JSON database is not available
+// This file is safe to import in both server and client components
+
 export const profile = {
   name: "Gurpreet Singh Sahni",
   title: "Cloud Architect",
-  subtitle: "Cloud Architect • Infrastructure Strategy • Containerization Specialist",
+  subtitle: "Cloud Architect \u2022 Infrastructure Strategy \u2022 Containerization Specialist",
   location: "Jalandhar, India",
   phone: "+91-9315359351",
   email: "gurpreet.sahni@gmail.com",
   linkedin: "https://linkedin.com/in/gurpreet-singh-sahni-331410182",
   github: "https://github.com/gurpreetsinghsahni",
   headline:
-    "Cloud Architect • Kubernetes • AWS • Infrastructure Automation • DevOps • AI Infrastructure",
+    "Cloud Architect \u2022 Kubernetes \u2022 AWS \u2022 Infrastructure Automation \u2022 DevOps \u2022 AI Infrastructure",
   roles: [
     "Cloud Architect",
     "AWS Expert",
@@ -17,9 +20,9 @@ export const profile = {
     "DevOps Engineer",
     "AI Infrastructure Engineer",
   ],
-  about: `Forward-thinking Cloud Architect with nearly 5 years of demonstrated expertise evaluating, designing and managing robust enterprise cloud infrastructure across AWS and multi-cloud environments. Expert in advanced container orchestration using Kubernetes (Amazon EKS) to drive highly scalable, resilient deployment strategies — and in engineering automation frameworks with Bash and Python to streamline systems monitoring and integrations.`,
+  about: `Forward-thinking Cloud Architect with nearly 5 years of demonstrated expertise evaluating, designing and managing robust enterprise cloud infrastructure across AWS and multi-cloud environments. Expert in advanced container orchestration using Kubernetes (Amazon EKS) to drive highly scalable, resilient deployment strategies \u2014 and in engineering automation frameworks with Bash and Python to streamline systems monitoring and integrations.`,
   philosophy:
-    "Infrastructure should be invisible when it works, and obvious to fix when it doesn't. I design for that — automated, observable, and boring in the best way.",
+    "Infrastructure should be invisible when it works, and obvious to fix when it doesn't. I design for that \u2014 automated, observable, and boring in the best way.",
   yearsExperience: 5,
   education: {
     degree: "B.Tech in Computer Science",
@@ -128,7 +131,7 @@ export const experience = [
     company: "Rackspace Technology",
     role: "Cloud Architect I / II",
     focus: "Infrastructure & Orchestration Focus",
-    period: "Sep 2023 — Present",
+    period: "Sep 2023 \u2014 Present",
     current: true,
     bullets: [
       "Reviewed and assessed complex cloud infrastructure blueprints, recommending optimizations aligned with architectural best practices to support scalable workloads.",
@@ -152,7 +155,7 @@ export const experience = [
     company: "Avancer Corporation",
     role: "Associate Cloud Engineer",
     focus: "Infrastructure Design & Migration",
-    period: "Feb 2021 — Sep 2023",
+    period: "Feb 2021 \u2014 Sep 2023",
     current: false,
     bullets: [
       "Designed and deployed cloud architecture primitives using Terraform templates and AWS CloudFormation following modular, declarative design practices.",

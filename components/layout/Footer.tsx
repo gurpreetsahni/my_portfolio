@@ -1,7 +1,17 @@
 import { Linkedin, Mail } from "lucide-react";
-import { profile } from "@/lib/data";
+import { profile as staticProfile } from "@/lib/data";
 
-export default function Footer() {
+interface ProfileData {
+  name: string;
+  email: string;
+  linkedin: string;
+  location: string;
+  [key: string]: unknown;
+}
+
+export default function Footer({ profile: profileProp }: { profile?: ProfileData }) {
+  const profile = profileProp || staticProfile;
+
   return (
     <footer className="relative border-t border-base-line container-px py-10">
       <div className="flex flex-col md:flex-row items-center justify-between gap-6">

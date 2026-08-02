@@ -5,9 +5,16 @@ import { motion } from "framer-motion";
 import { ArrowRight, Download, Mail } from "lucide-react";
 import dynamic from "next/dynamic";
 import MagneticButton from "@/components/ui/MagneticButton";
-import { profile } from "@/lib/data";
+import { profile as staticProfile } from "@/lib/data";
 
 const NetworkField = dynamic(() => import("@/components/ui/NetworkField"), { ssr: false });
+
+interface ProfileData {
+  name: string;
+  title: string;
+  roles: string[];
+  [key: string]: unknown;
+}
 
 function useTypingRoles(roles: string[]) {
   const [index, setIndex] = useState(0);
@@ -41,9 +48,9 @@ function useTypingRoles(roles: string[]) {
   return text;
 }
 
-const nameWords = "Gurpreet Singh Sahni".split(" ");
-
-export default function Hero() {
+export default function Hero({ profile: profileProp }: { profile?: ProfileData }) {
+  const profile = profileProp || staticProfile;
+  const nameWords = profile.name.split(" ");
   const typed = useTypingRoles(profile.roles);
 
   let charIndex = 0;

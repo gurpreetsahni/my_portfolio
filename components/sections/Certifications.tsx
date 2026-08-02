@@ -3,9 +3,16 @@
 import { motion } from "framer-motion";
 import { Award } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { certifications } from "@/lib/data";
+import { certifications as staticCertifications } from "@/lib/data";
 
-export default function Certifications() {
+interface Certification {
+  name: string;
+  issuer: string;
+}
+
+export default function Certifications({ certifications: certificationsProp }: { certifications?: Certification[] }) {
+  const certifications = certificationsProp || staticCertifications;
+
   return (
     <section id="certifications" className="relative section-pad container-px overflow-hidden">
       <div className="absolute bottom-0 right-0 w-[24rem] max-w-full h-[24rem] bg-aurora-3 rounded-full blur-3xl -z-10 opacity-30" />

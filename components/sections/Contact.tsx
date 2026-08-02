@@ -5,20 +5,25 @@ import { motion } from "framer-motion";
 import { Mail, MapPin, Linkedin, Phone, Send, Check, AlertCircle, MessageCircle } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import MagneticButton from "@/components/ui/MagneticButton";
-import { profile } from "@/lib/data";
+import { profile as staticProfile } from "@/lib/data";
 import { countryCodes } from "@/lib/countryCodes";
 
 // ─── Web3Forms ───────────────────────────────────────────────────────────────
-// Free contact form service — no signup needed.
-// Go to https://web3forms.com/, enter your email, and you'll get an access key.
-// Replace the value below with your key. All form submissions go to your email.
-// ─────────────────────────────────────────────────────────────────────────────
 const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HERE";
 
-// WhatsApp number (remove dashes/spaces, keep country code)
-const WHATSAPP_NUMBER = profile.phone.replace(/[-\s]/g, "");
+interface ProfileData {
+  name: string;
+  email: string;
+  phone: string;
+  linkedin: string;
+  location: string;
+  [key: string]: unknown;
+}
 
-export default function Contact() {
+export default function Contact({ profile: profileProp }: { profile?: ProfileData }) {
+  const profile = profileProp || staticProfile;
+  const WHATSAPP_NUMBER = profile.phone.replace(/[-\s]/g, "");
+
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -63,7 +68,6 @@ export default function Contact() {
         setTimeout(() => setStatus("idle"), 4000);
         return;
       }
-      // Append full phone with country code to form data
       formData.set("phone", `${countryCode} ${phone}`);
     }
 
@@ -239,7 +243,7 @@ export default function Contact() {
                 Send Message <Send size={16} />
               </>
             )}
-            {status === "sending" && "Sending…"}
+            {status === "sending" && "Sending\u2026"}
             {status === "sent" && (
               <>
                 Sent <Check size={16} />

@@ -1,3 +1,6 @@
+import { getPortfolioData } from "@/lib/getPortfolioData";
+import PortfolioShell from "@/components/layout/PortfolioShell";
+import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import Skills from "@/components/sections/Skills";
@@ -7,17 +10,22 @@ import Certifications from "@/components/sections/Certifications";
 import TechStack from "@/components/sections/TechStack";
 import Contact from "@/components/sections/Contact";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const data = await getPortfolioData();
+
   return (
-    <>
-      <Hero />
-      <About />
-      <Skills />
-      <Experience />
-      <Projects />
-      <Certifications />
-      <TechStack />
-      <Contact />
-    </>
+    <PortfolioShell>
+      <Hero profile={data.profile} />
+      <About profile={data.profile} stats={data.stats} timeline={data.timeline} />
+      <Skills skillCategories={data.skillCategories} />
+      <Experience experience={data.experience} />
+      <Projects projects={data.projects} />
+      <Certifications certifications={data.certifications} />
+      <TechStack techStack={data.techStack} />
+      <Contact profile={data.profile} />
+      <Footer profile={data.profile} />
+    </PortfolioShell>
   );
 }

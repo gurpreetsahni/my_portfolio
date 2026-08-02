@@ -3,9 +3,19 @@
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
 import GlowCard from "@/components/ui/GlowCard";
-import { projects } from "@/lib/data";
+import { projects as staticProjects } from "@/lib/data";
 
-export default function Projects() {
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  tags: string[];
+  github: string;
+}
+
+export default function Projects({ projects: projectsProp }: { projects?: Project[] }) {
+  const projects = projectsProp || staticProjects;
+
   return (
     <section id="projects" className="relative section-pad container-px">
       <SectionHeading

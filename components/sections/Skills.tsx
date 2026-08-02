@@ -4,15 +4,21 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
 import GlowCard from "@/components/ui/GlowCard";
-import { skillCategories } from "@/lib/data";
+import { skillCategories as staticSkillCategories } from "@/lib/data";
 import { getSkillIcon } from "@/lib/skillIcons";
+
+interface SkillCategory {
+  id: string;
+  label: string;
+  skills: { name: string; level: number }[];
+}
 
 function SkillIcon({ name }: { name: string }) {
   const iconUrl = getSkillIcon(name);
   const [failed, setFailed] = useState(false);
 
   if (!iconUrl || failed) {
-    return <span className="text-base flex-shrink-0 w-[18px] h-[18px] flex items-center justify-center">⚙️</span>;
+    return <span className="text-base flex-shrink-0 w-[18px] h-[18px] flex items-center justify-center">&#9881;&#65039;</span>;
   }
 
   return (
@@ -29,7 +35,9 @@ function SkillIcon({ name }: { name: string }) {
   );
 }
 
-export default function Skills() {
+export default function Skills({ skillCategories: skillCategoriesProp }: { skillCategories?: SkillCategory[] }) {
+  const skillCategories = skillCategoriesProp || staticSkillCategories;
+
   return (
     <section id="skills" className="relative section-pad container-px">
       <SectionHeading

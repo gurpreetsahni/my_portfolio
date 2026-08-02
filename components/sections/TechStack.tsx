@@ -1,7 +1,8 @@
 import SectionHeading from "@/components/ui/SectionHeading";
-import { techStack } from "@/lib/data";
+import { techStack as staticTechStack } from "@/lib/data";
 
-export default function TechStack() {
+export default function TechStack({ techStack: techStackProp }: { techStack?: string[] }) {
+  const techStack = techStackProp || staticTechStack;
   const loopItems = [...techStack, ...techStack];
 
   return (
