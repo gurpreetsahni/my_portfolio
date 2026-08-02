@@ -16,7 +16,7 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        if (credentials.email !== ADMIN_EMAIL) {
+        if (credentials.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
           return null;
         }
 
