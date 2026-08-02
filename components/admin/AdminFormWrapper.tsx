@@ -53,7 +53,7 @@ export default function AdminFormWrapper({
   };
 
   return (
-    <div className="max-w-4xl">
+    <div className="max-w-4xl w-full overflow-x-hidden">
       {/* Back Button */}
       <Link
         href="/admin"

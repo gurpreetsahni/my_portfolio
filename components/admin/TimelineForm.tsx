@@ -22,8 +22,8 @@ export default function TimelineForm({ initialData }: { initialData: TimelineIte
       {({ data, setData }) => (
         <div className="space-y-3">
           {data.map((item: TimelineItem, index: number) => (
-            <div key={index} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4 flex items-start gap-4">
-              <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div key={index} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4 flex flex-col sm:flex-row sm:items-start gap-3">
+              <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-3 min-w-0">
                 <input
                   value={item.year}
                   onChange={(e) => { const u = [...data]; u[index] = { ...item, year: e.target.value }; setData(u); }}

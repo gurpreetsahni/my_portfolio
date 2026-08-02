@@ -27,7 +27,7 @@ export default function ExperienceForm({ initialData }: { initialData: Experienc
       {({ data, setData }) => (
         <div className="space-y-4">
           {data.map((exp: ExperienceItem, index: number) => (
-            <div key={index} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6">
+            <div key={index} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4 md:p-6">
               <div className="flex items-start justify-between mb-5">
                 <div>
                   <h3 className="font-semibold text-white text-[15px]">
