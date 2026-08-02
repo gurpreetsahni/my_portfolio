@@ -5,4 +5,4 @@
 export const ADMIN_EMAIL = "gurpreet.sahni@gmail.com";
 
 // Hash for: Lucky@2129
-export const ADMIN_PASSWORD_HASH = "$2b$10$y66SG9dmshYEScseDoKgbeWGiApQFnD.5FrK7GwpM80K2.NrfxGgm";
+export const ADMIN_PASSWORD_HASH = "$2b$10$F0vGUF00CQf4IzRYEhk8eO35BpTmU0Bmxk15UKzyA0H1AXnxtNWn";
