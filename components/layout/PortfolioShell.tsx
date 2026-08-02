@@ -11,7 +11,10 @@ export default function PortfolioShell({ children }: { children: React.ReactNode
     <>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-accent-violet focus:text-white focus:px-4 focus:py-2 focus:rounded-lg"
+        className="fixed top-4 left-4 z-[100] bg-accent-violet text-white px-4 py-2 rounded-lg -translate-y-20 focus:translate-y-0 transition-transform"
+        style={{ opacity: 0, pointerEvents: 'none' }}
+        onFocus={(e) => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.pointerEvents = 'auto'; }}
+        onBlur={(e) => { e.currentTarget.style.opacity = '0'; e.currentTarget.style.pointerEvents = 'none'; }}
       >
         Skip to content
       </a>
