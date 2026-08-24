@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Upload, Check, AlertCircle, Image as ImageIcon, FileText } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -69,6 +69,9 @@ function UploadCard({
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [uploadedPath, setUploadedPath] = useState<string | null>(null);
+  const [cacheBuster, setCacheBuster] = useState(Date.now());
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -96,6 +99,9 @@ function UploadCard({
         throw new Error(err.error || "Upload failed");
       }
 
+      const data = await res.json();
+      setUploadedPath(data.path);
+      setCacheBuster(Date.now());
       setMessage({ type: "success", text: `${title} updated!` });
       setTimeout(() => setMessage(null), 4000);
     } catch (error: any) {
@@ -103,8 +109,15 @@ function UploadCard({
       setPreview(null);
     } finally {
       setUploading(false);
+      // Reset the input so the same file can be re-selected
+      if (inputRef.current) {
+        inputRef.current.value = "";
+      }
     }
   };
+
+  // Determine the image source: preview blob > uploaded path > current file
+  const imageSrc = preview || `${uploadedPath || currentFile}?t=${cacheBuster}`;
 
   return (
     <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6">
@@ -122,10 +135,11 @@ function UploadCard({
         <div className="mb-5 flex justify-center">
           <div className="relative w-28 h-28 rounded-2xl overflow-hidden border border-white/[0.08] bg-white/[0.02]">
             <Image
-              src={preview || `${currentFile}?t=${Date.now()}`}
+              src={imageSrc}
               alt="Profile"
               fill
               className="object-cover"
+              unoptimized
             />
           </div>
         </div>
@@ -138,6 +152,7 @@ function UploadCard({
         </span>
         <span className="text-[11px] text-gray-700 mt-1">or drag and drop</span>
         <input
+          ref={inputRef}
           type="file"
           accept={accept}
           onChange={handleUpload}

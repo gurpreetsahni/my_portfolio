@@ -4,6 +4,14 @@ import { authOptions } from "@/lib/auth";
 import fs from "fs";
 import path from "path";
 
+// Map MIME types to file extensions
+const mimeToExt: Record<string, string> = {
+  "image/png": ".png",
+  "image/jpeg": ".jpg",
+  "image/webp": ".webp",
+  "application/pdf": ".pdf",
+};
+
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -32,8 +40,22 @@ export async function POST(request: NextRequest) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    const filename = type === "photo" ? "photo.png" : "resume.pdf";
-    const filePath = path.join(process.cwd(), "public", filename);
+    const ext = mimeToExt[file.type] || ".bin";
+    const filename = type === "photo" ? `photo${ext}` : "resume.pdf";
+    const publicDir = path.join(process.cwd(), "public");
+    const filePath = path.join(publicDir, filename);
+
+    // Remove any existing files for this type before writing the new one
+    // This handles the case where photo extension changes (e.g., photo.png -> photo.jpg)
+    if (type === "photo") {
+      const photoExtensions = [".png", ".jpg", ".jpeg", ".webp"];
+      for (const oldExt of photoExtensions) {
+        const oldPath = path.join(publicDir, `photo${oldExt}`);
+        if (fs.existsSync(oldPath) && oldPath !== filePath) {
+          fs.unlinkSync(oldPath);
+        }
+      }
+    }
 
     fs.writeFileSync(filePath, buffer);
 
