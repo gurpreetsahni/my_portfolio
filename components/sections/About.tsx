@@ -10,9 +10,10 @@ interface AboutProps {
   profile?: typeof staticProfile;
   stats?: typeof staticStats;
   timeline?: typeof staticTimeline;
+  photoUrl?: string;
 }
 
-export default function About({ profile: profileProp, stats: statsProp, timeline: timelineProp }: AboutProps) {
+export default function About({ profile: profileProp, stats: statsProp, timeline: timelineProp, photoUrl }: AboutProps) {
   const profile = profileProp || staticProfile;
   const stats = statsProp || staticStats;
   const timeline = timelineProp || staticTimeline;
@@ -39,11 +40,12 @@ export default function About({ profile: profileProp, stats: statsProp, timeline
           <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-accent-violet to-accent-blue opacity-60 blur-md" />
           <div className="relative w-40 h-40 md:w-52 md:h-52 rounded-full overflow-hidden border-2 border-white/10">
             <Image
-              src="/photo.png"
+              src={photoUrl || "/photo.png"}
               alt={profile.name}
               fill
               className="object-cover object-top"
               priority
+              unoptimized={!!photoUrl}
             />
           </div>
         </div>

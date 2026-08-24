@@ -51,6 +51,10 @@ export interface PortfolioData {
   certifications: { name: string; issuer: string }[];
   techStack: string[];
   timeline: { year: string; label: string; detail: string }[];
+  uploads?: {
+    photoUrl?: string;
+    resumeUrl?: string;
+  };
 }
 
 // Default data from static file (used to seed MongoDB on first run)

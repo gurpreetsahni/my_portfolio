@@ -36,6 +36,7 @@ export async function PUT(request: NextRequest) {
       "certifications",
       "techStack",
       "timeline",
+      "uploads",
     ];
 
     if (!validSections.includes(section)) {

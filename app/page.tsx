@@ -17,8 +17,8 @@ export default async function Home() {
 
   return (
     <PortfolioShell>
-      <Hero profile={data.profile} />
-      <About profile={data.profile} stats={data.stats} timeline={data.timeline} />
+      <Hero profile={data.profile} resumeUrl={data.uploads?.resumeUrl} />
+      <About profile={data.profile} stats={data.stats} timeline={data.timeline} photoUrl={data.uploads?.photoUrl} />
       <Skills skillCategories={data.skillCategories} />
       <Experience experience={data.experience} />
       <Projects projects={data.projects} />

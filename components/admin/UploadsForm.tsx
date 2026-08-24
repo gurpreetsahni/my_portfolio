@@ -5,8 +5,9 @@ import { Upload, Check, AlertCircle, Image as ImageIcon, FileText } from "lucide
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { uploadFile } from "@/lib/actions/upload";
 
-export default function UploadsForm() {
+export default function UploadsForm({ currentPhotoUrl, currentResumeUrl }: { currentPhotoUrl?: string; currentResumeUrl?: string }) {
   return (
     <div className="max-w-4xl">
       {/* Back Button */}
@@ -31,7 +32,7 @@ export default function UploadsForm() {
           description="PNG, JPEG, or WebP format"
           type="photo"
           accept="image/png,image/jpeg,image/webp"
-          currentFile="/photo.png"
+          currentFile={currentPhotoUrl || "/photo.png"}
           icon={<ImageIcon size={20} className="text-violet-400" />}
           isImage
         />
@@ -40,7 +41,7 @@ export default function UploadsForm() {
           description="PDF format"
           type="resume"
           accept="application/pdf"
-          currentFile="/resume.pdf"
+          currentFile={currentResumeUrl || "/resume.pdf"}
           icon={<FileText size={20} className="text-blue-400" />}
           isImage={false}
         />
@@ -89,18 +90,13 @@ function UploadCard({
     formData.append("type", type);
 
     try {
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
+      const result = await uploadFile(formData);
 
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || "Upload failed");
+      if (result.error) {
+        throw new Error(result.error);
       }
 
-      const data = await res.json();
-      setUploadedPath(data.path);
+      setUploadedPath(result.path || null);
       setCacheBuster(Date.now());
       setMessage({ type: "success", text: `${title} updated!` });
       setTimeout(() => setMessage(null), 4000);
@@ -117,7 +113,11 @@ function UploadCard({
   };
 
   // Determine the image source: preview blob > uploaded path > current file
-  const imageSrc = preview || `${uploadedPath || currentFile}?t=${cacheBuster}`;
+  // uploadedPath from Vercel Blob is a full URL, so don't append cache buster with ?
+  const imageSrc = preview
+    || (uploadedPath
+      ? `${uploadedPath}?t=${cacheBuster}`
+      : `${currentFile}?t=${cacheBuster}`);
 
   return (
     <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6">

@@ -1,7 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+"use server";
+
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { put, del, list } from "@vercel/blob";
+import { updateSection, readDb } from "@/lib/db";
 
 // Map MIME types to file extensions
 const mimeToExt: Record<string, string> = {
@@ -11,23 +13,22 @@ const mimeToExt: Record<string, string> = {
   "application/pdf": ".pdf",
 };
 
-export async function POST(request: NextRequest) {
+export async function uploadFile(formData: FormData) {
   const session = await getServerSession(authOptions);
   if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return { error: "Unauthorized" };
   }
 
   try {
-    const formData = await request.formData();
     const file = formData.get("file") as File;
     const type = formData.get("type") as string; // "photo" or "resume"
 
-    if (!file) {
-      return NextResponse.json({ error: "No file provided" }, { status: 400 });
+    if (!file || !(file instanceof File)) {
+      return { error: "No file provided" };
     }
 
     if (!type || !["photo", "resume"].includes(type)) {
-      return NextResponse.json({ error: "Invalid upload type" }, { status: 400 });
+      return { error: "Invalid upload type" };
     }
 
     const allowedTypes: Record<string, string[]> = {
@@ -36,10 +37,7 @@ export async function POST(request: NextRequest) {
     };
 
     if (!allowedTypes[type]?.includes(file.type)) {
-      return NextResponse.json(
-        { error: `Invalid file type for ${type}. Got: ${file.type}` },
-        { status: 400 }
-      );
+      return { error: `Invalid file type for ${type}. Got: ${file.type}` };
     }
 
     const ext = mimeToExt[file.type] || ".bin";
@@ -55,7 +53,7 @@ export async function POST(request: NextRequest) {
             await del(blob.url);
           }
         } catch {
-          // Ignore cleanup errors
+          // Ignore errors when cleaning up old files
         }
       }
     } else {
@@ -65,25 +63,28 @@ export async function POST(request: NextRequest) {
           await del(blob.url);
         }
       } catch {
-        // Ignore cleanup errors
+        // Ignore errors when cleaning up old files
       }
     }
 
-    // Upload to Vercel Blob
+    // Upload new file to Vercel Blob
     const blob = await put(filename, file, {
       access: "public",
       addRandomSuffix: false,
     });
 
-    return NextResponse.json({
-      success: true,
-      path: blob.url,
-    });
+    // Save the URL to MongoDB so the frontend can read it
+    const data = await readDb();
+    const currentUploads = data.uploads || {};
+    const updatedUploads = {
+      ...currentUploads,
+      ...(type === "photo" ? { photoUrl: blob.url } : { resumeUrl: blob.url }),
+    };
+    await updateSection("uploads", updatedUploads);
+
+    return { success: true, path: blob.url };
   } catch (error: any) {
     console.error("Upload error:", error);
-    return NextResponse.json(
-      { error: error?.message || "Failed to upload file" },
-      { status: 500 }
-    );
+    return { error: error?.message || "Failed to upload file" };
   }
 }

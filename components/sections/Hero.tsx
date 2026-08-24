@@ -48,7 +48,7 @@ function useTypingRoles(roles: string[]) {
   return text;
 }
 
-export default function Hero({ profile: profileProp }: { profile?: ProfileData }) {
+export default function Hero({ profile: profileProp, resumeUrl }: { profile?: ProfileData; resumeUrl?: string }) {
   const profile = profileProp || staticProfile;
   const nameWords = profile.name.split(" ");
   const typed = useTypingRoles(profile.roles);
@@ -151,7 +151,7 @@ export default function Hero({ profile: profileProp }: { profile?: ProfileData }
           <ArrowRight size={16} />
         </MagneticButton>
 
-        <MagneticButton as="a" href="/resume.pdf" className="glass text-ink-primary">
+        <MagneticButton as="a" href={resumeUrl || "/resume.pdf"} className="glass text-ink-primary">
           <Download size={16} />
           Download Resume
         </MagneticButton>
