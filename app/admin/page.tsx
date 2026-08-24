@@ -15,6 +15,7 @@ import {
   Upload,
   ArrowRight,
 } from "lucide-react";
+import ReseedButton from "@/components/admin/ReseedButton";
 
 export const dynamic = "force-dynamic";
 
@@ -110,6 +111,9 @@ export default async function AdminDashboard() {
           );
         })}
       </div>
+
+      {/* Reseed Data */}
+      <ReseedButton />
     </div>
   );
 }
