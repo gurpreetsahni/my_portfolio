@@ -20,13 +20,15 @@ export const metadata: Metadata = {
     description: profile.headline,
     type: "website",
     locale: "en_US",
+    url: "https://gurpreet-singh-sahni-portfolio.vercel.app",
+    siteName: `${profile.name} \u2014 Portfolio`,
   },
   twitter: {
     card: "summary_large_image",
     title: `${profile.name} \u2014 ${profile.title}`,
     description: profile.headline,
   },
-  metadataBase: new URL("https://gurpreetsahni.dev"),
+  metadataBase: new URL("https://gurpreet-singh-sahni-portfolio.vercel.app"),
 };
 
 export default function RootLayout({
