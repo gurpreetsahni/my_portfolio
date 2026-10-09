@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Download, Mail } from "lucide-react";
 import dynamic from "next/dynamic";
 import MagneticButton from "@/components/ui/MagneticButton";
+import ToptalBadge from "@/components/ui/ToptalBadge";
 import { profile as staticProfile } from "@/lib/data";
 
 const NetworkField = dynamic(() => import("@/components/ui/NetworkField"), { ssr: false });
@@ -67,20 +68,24 @@ export default function Hero({ profile: profileProp, resumeUrl }: { profile?: Pr
 
       <NetworkField />
 
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6 }}
-        className="glass rounded-full px-4 py-1.5 mb-8 flex items-center gap-2"
-      >
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-cyan opacity-75" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-cyan" />
-        </span>
-        <span className="font-mono text-xs text-ink-muted">
-          Available for architecture &amp; DevOps engagements
-        </span>
-      </motion.div>
+      <div className="mb-8 flex flex-col items-center gap-3">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="glass rounded-full px-4 py-1.5 flex items-center gap-2"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-cyan opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-cyan" />
+          </span>
+          <span className="font-mono text-xs text-ink-muted">
+            Available for architecture &amp; DevOps engagements
+          </span>
+        </motion.div>
+
+        <ToptalBadge />
+      </div>
 
       <h1 className="font-display text-center text-[11vw] leading-[1.3] md:text-[6vw] md:leading-[1.2] font-medium tracking-tight text-gradient max-w-6xl pb-2">
         {nameWords.map((word, wi) => {

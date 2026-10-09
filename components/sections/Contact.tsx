@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Mail, MapPin, Linkedin, Phone, Send, Check, AlertCircle, MessageCircle } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import MagneticButton from "@/components/ui/MagneticButton";
+import ToptalBadge from "@/components/ui/ToptalBadge";
 import { profile as staticProfile } from "@/lib/data";
 import { countryCodes } from "@/lib/countryCodes";
 
@@ -221,7 +222,8 @@ export default function Contact({ profile: profileProp }: { profile?: ProfileDat
           <textarea
             name="message"
             required
-            rows={5}
+            rows={3}
+            maxLength={500}
             placeholder="Tell me about the infrastructure problem you're solving"
             className="rounded-xl bg-white/[0.03] border border-base-line px-4 py-3 text-sm text-ink-primary placeholder:text-ink-faint focus:border-accent-violet transition-colors outline-none resize-none"
           />
@@ -256,6 +258,11 @@ export default function Contact({ profile: profileProp }: { profile?: ProfileDat
             )}
           </MagneticButton>
         </motion.form>
+      </div>
+
+      {/* Toptal Top 3% Talent badge — centered below the contact grid */}
+      <div className="mt-14 flex justify-center">
+        <ToptalBadge />
       </div>
     </section>
   );
